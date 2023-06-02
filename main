@@ -1,0 +1,216 @@
+#include <locale.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+// Constante que define o número máximo de clientes que podem ser armazenados na
+// memória
+#define MAX_CLIENTES 100
+
+struct Endereco {
+  char cep[8];
+  char estado[3];
+  char bairro[40];
+  char rua[30];
+  char numero[3];
+};
+
+typedef struct {
+  char nome[50];
+  char cpf [12];
+  char telefone[20];
+  char email[50];
+  struct Endereco endereco;
+
+} Cliente;
+
+Cliente clientes[MAX_CLIENTES]; // Variavel do tipo clientes para armazenar dados dos clientes controlada por uma constante
+int num_clientes = 0; // Variável que guarda o número atual de clientes cadastrados
+
+// Função para adicionar um novo cliente
+void addCliente() {
+  if (num_clientes == MAX_CLIENTES) { // Verifica se o vetor de clientes está cheio
+    printf("O número máximo de clientes foi atingido.\n");
+    return 0;
+  }
+  system ("clear");
+  printf("Informe o nome do cliente: ");
+  __fpurge(stdin);
+  fgets(clientes[num_clientes].nome, 50, stdin);
+  printf("Informe o cpf do cliente: ");
+  __fpurge(stdin);
+  fgets(clientes[num_clientes].cpf, 12, stdin);
+  printf("Informe o cep do cliente: ");
+  __fpurge(stdin);
+  fgets(clientes[num_clientes].endereco.cep, 8, stdin);
+  printf("Informe o estado do cliente: ");
+  __fpurge(stdin);
+  fgets(clientes[num_clientes].endereco.estado, 3, stdin);
+  printf("Informe o bairro do cliente: ");
+  __fpurge(stdin);
+  fgets(clientes[num_clientes].endereco.bairro, 40, stdin);
+  printf("Informe a rua do cliente: ");
+  __fpurge(stdin);
+  fgets(clientes[num_clientes].endereco.rua, 30, stdin);
+  printf("Informe o numero da casa do cliente: ");
+  __fpurge(stdin);
+  fgets(clientes[num_clientes].endereco.numero, 3, stdin);
+  printf("Informe o telefone do cliente: ");
+  __fpurge(stdin);
+  fgets(clientes[num_clientes].telefone, 20, stdin);
+  printf("Informe o email do cliente: ");
+  __fpurge(stdin);
+  fgets(clientes[num_clientes].email, 50, stdin);
+
+  num_clientes++;
+  printf("\t\t\t\tCliente adicionado com sucesso.\n");
+}
+
+// Função para buscar um cliente pelo cpf
+void procuraCliente() {
+  char cpf[12];
+  system ("clear");
+  printf("Informe o cpf do cliente que deseja buscar: ");
+  __fpurge(stdin);
+  fgets(cpf, 12, stdin);
+  for (int i = 0; i < num_clientes; i++) {
+    if (strcmp(clientes[i].cpf, cpf) == 0) {
+      printf("Cliente encontrado:\n");
+      printf("Nome: %s", clientes[i].nome);
+      printf("cpf: %s", clientes[i].cpf);
+      printf("Cep: %s", clientes[i].endereco.cep);
+      printf("Estado: %s", clientes[i].endereco.estado);
+      printf("Rua: %s", clientes[i].endereco.rua);
+      printf("Numero: %s", clientes[i].endereco.numero);
+      printf("Telefone: %s", clientes[i].telefone);
+      printf("Email: %s", clientes[i].email);
+      printf("\n\n");
+      return 0;
+    }
+  }
+  system ("clear");
+  printf("\t\t\t\tCliente não encontrado.\n");
+}
+
+void listaCliente() {
+  if (num_clientes == 0) {
+    printf("Não há clientes cadastrados.\n");
+    return;
+  }
+  printf("\nClientes cadastrados:\n");
+  for (int i = 0; i < num_clientes; i++) {
+    printf("Nome: %s", clientes[i].nome);
+    printf("Cpf: %s", clientes[i].cpf);
+    printf("Cep: %s", clientes[i].endereco.cep);
+    printf("Estado: %s", clientes[i].endereco.estado);
+    printf("Rua: %s", clientes[i].endereco.rua);
+    printf("Numero: %s", clientes[i].endereco.numero);
+    printf("Telefone: %s", clientes[i].telefone);
+    printf("Email: %s", clientes[i].email);
+    printf("\n\n");
+  }
+}
+// Função para editar um cliente pelo nome
+void editCliente() {
+  char nome[50];
+  system ("clear");
+  printf("Informe o nome do cliente que deseja editar: ");
+  __fpurge(stdin);
+  fgets(nome, 50, stdin);
+  
+  for (int i = 0; i < num_clientes; i++) {
+    if (strcmp(clientes[i].nome, nome) == 0) {
+      printf("Informe o novo nome do cliente: ");
+      __fpurge(stdin);
+      fgets(clientes[i].nome, 50, stdin);
+      printf("Informe o novo cep do cliente: ");
+      __fpurge(stdin);
+      fgets(clientes[i].endereco.cep, 8, stdin);
+      printf("Informe o novo estado do cliente: ");
+      __fpurge(stdin);
+      fgets(clientes[i].endereco.estado, 3, stdin);
+      printf("Informe o novo bairro do cliente: ");
+      __fpurge(stdin);
+      fgets(clientes[i].endereco.bairro, 40, stdin);
+      printf("Informe a nova rua do cliente: ");
+      __fpurge(stdin);
+      fgets(clientes[i].endereco.rua, 30, stdin);
+      printf("Informe o novo numero do cliente: ");
+      __fpurge(stdin);
+      fgets(clientes[i].endereco.numero, 3, stdin);
+      printf("Informe o novo telefone do cliente: ");
+      __fpurge(stdin);
+      fgets(clientes[i].telefone, 20, stdin);
+      printf("Informe o novo email do cliente: ");
+      __fpurge(stdin);
+      fgets(clientes[i].email, 50, stdin);
+      printf("\t\t\t\tCliente editado com sucesso.\n");
+      
+      return 0;
+    }
+  }
+  printf("\t\t\t\tCliente não encontrado.\n");
+}
+// Função de excluir cliente
+void excluirCliente() {
+  char nome[50];
+  printf("Informe o nome do cliente que deseja excluir: ");
+  __fpurge(stdin);
+  fgets(nome, 50, stdin);
+  for (int i = 0; i < num_clientes; i++) {
+    if (strcmp(clientes[i].nome, nome) == 0) {
+      for (int j = i; j < num_clientes - 1; j++) {
+        clientes[j] = clientes[j+1]; // Sobrescreve o cliente removido com o próximo cliente
+      }
+      num_clientes--; // Reduz o contador de clientes
+      system ("clear");
+      printf("\t\t\t\tCliente excluído com sucesso.\n");
+      return 0;
+    }
+  }
+  printf("\t\t\t\tCliente não encontrado.\n");
+}
+// Função de opções de escolha
+void menu() {
+  int opcao;
+  do {
+    
+    printf("1 para adicionar cliente\n2 para listar clientes\n3 Para procurar cliente\n4 Para editar "
+           "cliente\n5 Para excluir cliente\n6 Para sair\n");
+    scanf("%d", &opcao);
+    switch (opcao) {
+    case 1: {
+      addCliente();
+      break;
+    }
+    case 2: {
+      listaCliente();
+      break;
+    }
+    case 3: {
+      procuraCliente();
+      break;
+    }
+    case 4: {
+      editCliente();
+      break;
+    }   
+    case 5: {
+      excluirCliente();
+      break;
+    }
+    case 6: {
+      printf("\n\n\tVocê escolheu sair!\n");
+      break;
+    }
+    default: // caso o usuário digite a opção errada, imprime o print abaixo.
+      printf("\n\n\tOpção inválida!\n");
+    }
+  } while (opcao != 6);
+
+  return 0;
+}
+int main() {
+  setlocale(LC_ALL, "Portuguese");
+  menu();
+  return 0;
+}
